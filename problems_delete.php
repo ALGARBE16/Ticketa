@@ -15,6 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
     $id = $deleteData['id'];
 
+    require 'conn.php'; // Asegúrate de que este archivo existe y contiene la conexión a la base de datos
+
     try {
         // Conexión a la base de datos
         $conn = new PDO('mysql:host=localhost;dbname=soporte_tecnico', 'root', '');
