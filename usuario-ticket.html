@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reportar Problemas</title>
+  <link rel="stylesheet" href="style-usuario.css" />
+</head>
+<body>
+  <h1>Soporte Técnico - Mis Reportes</h1>
+
+  <form id="reporteForm">
+    <input type="text" id="title" placeholder="Título del problema" required />
+    <textarea id="description" placeholder="Descripción detallada" required></textarea>
+    
+    <select id="status" required>
+      <option value="">Estado</option>
+      <option value="pendiente">Pendiente</option>
+      <option value="en_proceso">En proceso</option>
+      <option value="resuelto">Resuelto</option>
+    </select>
+
+    <input type="datetime-local" id="created_at" required /> 
+    <input type="datetime-local" id="resolved_at" />
+
+    <select id="priority" required>
+      <option value="">Prioridad</option>
+      <option value="baja">Baja</option>
+      <option value="media">Media</option>
+      <option value="alta">Alta</option>
+    </select>
+
+    <button type="submit">Enviar Reporte</button>
+  </form>
+<div id="mensaje" class="mensaje"></div>
+  <h2>Mis reportes</h2>
+  <ul id="listaReportes"></ul>
+
+  <script src="js-usuario.js"></script>
+</body>
+</html>
