@@ -10,20 +10,20 @@
   <h1>Soporte Técnico - Mis Reportes</h1>
 
   <form id="reporteForm">
-    <input type="text" id="title" placeholder="Título del problema" required />
-    <textarea id="description" placeholder="Descripción detallada" required></textarea>
+    <input type="text" id="title" name="title" placeholder="Título del problema" required />
+    <textarea id="description" name="description"placeholder="Descripción detallada" required></textarea>
     
-    <select id="status" required>
+    <select id="status" name="status" required>
       <option value="">Estado</option>
       <option value="pendiente">Pendiente</option>
       <option value="en_proceso">En proceso</option>
       <option value="resuelto">Resuelto</option>
     </select>
 
-    <input type="datetime-local" id="created_at" required /> 
-    <input type="datetime-local" id="resolved_at" />
+    <input type="datetime-local" id="created_at" name="created_at" required /> 
+    <input type="datetime-local" id="resolved_at" name="resolved_at" />
 
-    <select id="priority" required>
+    <select id="priority" name="priority" required>
       <option value="">Prioridad</option>
       <option value="baja">Baja</option>
       <option value="media">Media</option>

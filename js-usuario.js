@@ -1,32 +1,55 @@
-const API_POST_URL = 'http://localhost/parcial-latikera/Ticketa/problems_post.php';
+const API_POST_URL = 'http://localhost/parcial-latikera/problems_post.php'; // Asegurate que esta ruta es correcta
 
 async function enviarReporteForm() {
-  const formData = new URLSearchParams();
-  formData.append('title', document.getElementById('title').value);
-  formData.append('description', document.getElementById('description').value);
-  formData.append('status', document.getElementById('status').value);
-  formData.append('created_at', document.getElementById('created_at').value);
-  formData.append('resolved_at', document.getElementById('resolved_at').value || '');
-  formData.append('priority', document.getElementById('priority').value);
+  const form = document.getElementById('reporteForm');
+  const formData = new FormData(form); // Tomamos todos los campos del formulario directamente
+
+  console.log('📤 Enviando datos con FormData...');
 
   try {
     const res = await fetch(API_POST_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: formData.toString()
+      body: formData // No seteamos headers, FormData lo maneja solo
     });
 
-    const data = await res.json();
+    const resText = await res.text();
+    console.log('📥 Respuesta cruda del servidor:', resText);
+
+    let data;
+    try {
+      data = JSON.parse(resText);
+    } catch (e) {
+      throw new Error('Respuesta del servidor no es JSON válido.');
+    }
 
     if (res.ok && data.success) {
       mostrarMensaje(`✅ ${data.message}`);
+      form.reset(); // Limpiamos el formulario
     } else {
       mostrarMensaje(`❌ ${data.message || 'Error desconocido'}`, 'error');
     }
   } catch (error) {
-    console.error('Error en la solicitud:', error);
+    console.error('❌ Error en la solicitud:', error);
     mostrarMensaje('❌ Error en la conexión con el servidor.', 'error');
   }
+}
+
+// Escuchar el evento submit del formulario
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("reporteForm");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault(); // Evita recargar la página
+    enviarReporteForm(); // Enviamos los datos
+  });
+});
+
+// Mostrar mensajes en pantalla
+function mostrarMensaje(mensaje, tipo = 'ok') {
+  const div = document.getElementById("mensaje");
+  div.textContent = mensaje;
+  div.className = tipo === 'ok' ? 'mensaje ok' : 'mensaje error';
+  div.style.display = 'block';
+  setTimeout(() => {
+    div.style.display = 'none';
+  }, 4000);
 }
