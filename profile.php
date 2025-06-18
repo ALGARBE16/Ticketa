@@ -3,7 +3,17 @@ require 'vendor/autoload.php';
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
+// HEADERS CORS - ANTES DE CUALQUIER SALIDA
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+// Manejar preflight OPTIONS
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
 header("Content-Type: application/json");
 
 // Obtener headers
@@ -31,7 +41,6 @@ try {
 
     // Decodificar token con la clase Key
     $decoded = JWT::decode($jwt, new Key($secretKey, 'HS256'));
-
 
     echo json_encode([
         "success" => true,

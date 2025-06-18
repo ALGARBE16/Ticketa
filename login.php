@@ -4,6 +4,17 @@ use Firebase\JWT\JWT;
 
 require 'conn.php';
 
+// HEADERS CORS - IMPORTANTE QUE ESTÉN ANTES DE CUALQUIER SALIDA
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+// Manejar preflight OPTIONS
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
 header('Content-Type: application/json');
 
 $secretKey = 'TU_SECRETO_AQUI'; // Cambiala por una clave segura
@@ -39,7 +50,6 @@ try {
   ];
 
   $jwt = JWT::encode($payload, $secretKey, 'HS256');
-
 
   echo json_encode(['success' => true, 'token' => $jwt]);
 
