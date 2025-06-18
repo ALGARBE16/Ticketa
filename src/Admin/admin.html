@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="admin-panel">
+    <h1>🛠️ Panel de Administración - Soporte Técnico</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Problema</th>
+          <th>Estado</th>
+          <th>Respuesta</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-reportes">
+        <!-- Filas generadas por JS -->
+      </tbody>
+    </table>
+  </div>
+  <script src="admin.js"></script>
+</body>
+<button onclick="window.location.href='../Detalle/detalle.html?id=1'">Ver detalle</button>
+
+</html>
