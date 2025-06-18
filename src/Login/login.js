@@ -1,23 +1,27 @@
 function iniciarSesion() {
-  const usuario = document.getElementById('login-usuario').value;
-  const pass = document.getElementById('login-pass').value;
+  const usuario = document.getElementById("login-usuario").value;
+  const pass = document.getElementById("login-pass").value;
 
-  if (usuario === 'admin' && pass === '1234') {
-    window.location.href = '../Admin/admin.html';
-  } else if (usuario === 'usuario' && pass === '1234') {
-    window.location.href = '../Usuario/index.html';
+  if (usuario === "admin" && pass === "1234") {
+    window.location.href = "../Admin/admin.html";
+  } else if (usuario === "usuario" && pass === "1234") {
+    window.location.href = "../Usuario/index-usuari.html";
   } else {
-    document.getElementById('login-error').textContent = 'Usuario o contraseña incorrectos';
+    document.getElementById("login-error").textContent =
+      "Usuario o contraseña incorrectos";
   }
 }
 
 function registrarse() {
-  const usuario = document.getElementById('reg-usuario').value;
-  const pass = document.getElementById('reg-pass').value;
+  const usuario = document.getElementById("reg-usuario").value;
+  const pass = document.getElementById("reg-pass").value;
 
   if (usuario && pass) {
-    document.getElementById('reg-msg').textContent = `Usuario ${usuario} registrado (simulado)`;
+    document.getElementById(
+      "reg-msg"
+    ).textContent = `Usuario ${usuario} registrado (simulado)`;
   } else {
-    document.getElementById('reg-msg').textContent = 'Completa usuario y contraseña';
+    document.getElementById("reg-msg").textContent =
+      "Completa usuario y contraseña";
   }
 }
