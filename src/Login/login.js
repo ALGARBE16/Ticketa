@@ -16,7 +16,6 @@ function registrarse() {
   const pass = document.getElementById('reg-pass').value;
 
   if (usuario && pass) {
-    // Simula guardado, en proyecto real esto va al backend
     document.getElementById('reg-msg').textContent = `Usuario ${usuario} registrado (simulado)`;
   } else {
     document.getElementById('reg-msg').textContent = 'Completa usuario y contraseña';

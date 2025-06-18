@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reportar Problemas</title>
+  <title>Soporte Técnico - Mis Reportes</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Soporte Técnico - Mis Reportes</h1>
+  <div class="usuario-panel">
+    <h1>🛠️ Soporte Técnico - Mis Reportes</h1>
 
-  <form id="reporteForm">
-    <input type="text" id="titulo" placeholder="Título del problema" required />
-    <textarea id="descripcion" placeholder="Descripción detallada" required></textarea>
-    <button type="submit">Enviar Reporte</button>
-  </form>
+    <form id="reporteForm">
+      <input type="text" id="titulo" placeholder="Título del problema" required />
+      <textarea id="descripcion" placeholder="Descripción detallada" required></textarea>
+      <button type="submit">Enviar Reporte</button>
+    </form>
 
-  <h2>Mis reportes</h2>
-  <ul id="listaReportes"></ul>
+    <h2>Mis reportes</h2>
+    <ul id="listaReportes"></ul>
+
+    <button class="btn-detalle" onclick="window.location.href='../Detalle/detalle.html?id=1'">Ver detalle</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
-<button onclick="window.location.href='../Detalle/detalle.html?id=1'">Ver detalle</button>
-
 </html>
