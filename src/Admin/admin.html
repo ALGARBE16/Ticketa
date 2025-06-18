@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="admin-panel">
+    <h1>🛠️ Panel de Administración - Soporte Técnico</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Problema</th>
+          <th>Estado</th>
+          <th>Respuesta</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Juan</td>
+          <td>Luminaria rota</td>
+          <td class="estado-pendiente">Pendiente</td>
+          <td>En revisión</td>
+          <td>
+            <button class="btn-accion">Finalizar</button>
+            <button class="btn-accion">Eliminar</button>
+            <button class="btn-detalle" onclick="window.location.href='../Detalle/detalle.html?id=1'">Ver detalle</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Ana</td>
+          <td>Bache</td>
+          <td class="estado-finalizado">Finalizado</td>
+          <td>Arreglado</td>
+          <td>
+            <button class="btn-accion">Finalizar</button>
+            <button class="btn-accion">Eliminar</button>
+            <button class="btn-detalle" onclick="window.location.href='../Detalle/detalle.html?id=2'">Ver detalle</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script src="admin.js"></script>
+</body>
+</html>
