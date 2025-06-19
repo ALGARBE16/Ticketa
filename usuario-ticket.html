@@ -2,39 +2,62 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reportar Problemas</title>
-  <link rel="stylesheet" href="style-usuario.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestión de Reportes</title>
+  <link rel="stylesheet" href="style-usuario.css">
 </head>
 <body>
-  <h1>Soporte Técnico - Mis Reportes</h1>
 
-  <form id="reporteForm">
-    <input type="text" id="title" name="title" placeholder="Título del problema" required />
-    <textarea id="description" name="description"placeholder="Descripción detallada" required></textarea>
-    
-    <select id="status" name="status" required>
-      <option value="">Estado</option>
-      <option value="pendiente">Pendiente</option>
-      <option value="en_proceso">En proceso</option>
-      <option value="resuelto">Resuelto</option>
-    </select>
+  <!-- Menú superior -->
+  <div style="position: absolute; top: 20px; left: 20px;">
+    <button onclick="mostrarSeccion('reportes')">Reportes</button>
+    <button onclick="mostrarSeccion('estado')">Estado de Reportes</button>
+  </div>
 
-    <input type="datetime-local" id="created_at" name="created_at" required /> 
-    <input type="datetime-local" id="resolved_at" name="resolved_at" />
+  <!-- Sección Reportes -->
+  <section id="seccion-reportes">
+    <h2>Mis Reportes</h2>
+    <ul id="listaReportes"></ul>
 
-    <select id="priority" name="priority" required>
-      <option value="">Prioridad</option>
-      <option value="baja">Baja</option>
-      <option value="media">Media</option>
-      <option value="alta">Alta</option>
-    </select>
+    <button onclick="mostrarFormulario()">Crear Reporte</button>
 
-    <button type="submit">Enviar Reporte</button>
-  </form>
-<div id="mensaje" class="mensaje"></div>
-  <h2>Mis reportes</h2>
-  <ul id="listaReportes"></ul>
+    <!-- Formulario crear/modificar reporte -->
+   <form id="reporteForm" style="display: none; margin-top: 20px;">
+  <h2>Crear Nuevo Reporte</h2>
+
+  <input type="text" name="title" id="title" placeholder="Título del problema" required />
+  <textarea name="description" id="description" placeholder="Descripción..." required></textarea>
+
+  <label for="priority">Prioridad:</label>
+  <select name="priority" id="priority" required>
+    <option value="">Seleccionar prioridad</option>
+    <option value="ALTA">Alta</option>
+    <option value="MEDIA">Media</option>
+    <option value="BAJA">Baja</option>
+  </select>
+
+  <label for="status">Estado:</label>
+  <select name="status" id="status" required>
+    <option value="">Seleccionar estado</option>
+    <option value="PENDIENTE">Pendiente</option>
+    <option value="EN_PROCESO">En proceso</option>
+    <option value="RESUELTO">Resuelto</option>
+  </select>
+
+  <input type="datetime-local" name="created_at" id="created_at" required />
+  <input type="datetime-local" name="resolved_at" id="resolved_at" />
+
+  <button type="submit">Enviar Reporte</button>
+  <div id="mensaje" class="respuesta"></div>
+</form>
+
+  </section>
+
+  <!-- Sección Estado de reportes -->
+  <section id="seccion-estado" style="display: none;">
+    <h2>Estado de mis reportes</h2>
+    <ul id="listaEstado"></ul>
+  </section>
 
   <script src="js-usuario.js"></script>
 </body>
