@@ -19,7 +19,19 @@ document
 
       if (response.ok && data.success) {
         alert("Login exitoso");
-        localStorage.setItem("token", data.token); // Guardar el token
+        localStorage.setItem("token", data.token);
+
+        // Decodificar el token para obtener el rol (sin librerías externas)
+        const payloadBase64 = data.token.split(".")[1];
+        const payload = JSON.parse(atob(payloadBase64));
+
+        localStorage.setItem("role", payload.role);
+
+        // Si es admin, redireccionar a panel (opcional)
+        if (payload.role === "admin") {
+          alert("Accediste como ADMINISTRADOR");
+          // window.location.href = "/admin/dashboard.html"; // si querés redirigir
+        }
       } else {
         alert("Error al iniciar sesión: " + data.message);
       }

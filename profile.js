@@ -19,9 +19,16 @@ document.getElementById("btnProfile").addEventListener("click", async () => {
     const data = await response.json();
     console.log("Respuesta API:", data);
 
-    if (response.ok) {
-      document.getElementById("profileInfo").innerText =
-        "Bienvenido: " + data.user;
+    if (response.ok && data.success) {
+      let mensaje = `Bienvenido: ${data.user} (Rol: ${data.role})`;
+
+      // Si el usuario es admin, podrías redirigir o mostrar algo extra
+      if (data.role === "admin") {
+        mensaje += "\n🔒 Tenés acceso al panel de administración.";
+        // window.location.href = "/admin/dashboard.html"; // si tuvieras un panel
+      }
+
+      document.getElementById("profileInfo").innerText = mensaje;
     } else {
       document.getElementById("profileInfo").innerText = "";
       alert("Acceso denegado: " + data.message);

@@ -10,12 +10,12 @@
   </head>
   <body class="bg-light">
     <div class="container py-5">
-      <h1 class="text-center mb-4">Ticketa - Sistema de Autenticación</h1>
+      <h1 class="text-center mb-4">Ticketa - Iniciar Sesión</h1>
 
-      <div class="row g-4">
-        <!-- Login -->
+      <!-- Login directo -->
+      <div class="row justify-content-center">
         <div class="col-md-6">
-          <div class="card shadow-sm">
+          <div class="card shadow">
             <div class="card-body">
               <h3 class="card-title mb-3">Iniciar Sesión</h3>
               <form id="loginForm">
@@ -39,55 +39,29 @@
                     required
                   />
                 </div>
-                <button type="submit" class="btn btn-primary w-100">
-                  Login
+                <button type="submit" class="btn btn-primary w-100 mb-3">
+                  Entrar
                 </button>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <!-- Registro -->
-        <div class="col-md-6">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h3 class="card-title mb-3">Registrarse</h3>
-              <form id="registerForm">
-                <div class="mb-3">
-                  <label for="registerEmail" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="registerEmail"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="registerPassword" class="form-label"
-                    >Contraseña</label
+                <div class="text-center">
+                  <button
+                    type="button"
+                    class="btn btn-link"
+                    data-bs-toggle="modal"
+                    data-bs-target="#registerModal"
                   >
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="registerPassword"
-                    required
-                  />
+                    ¿No tenés cuenta? Registrate
+                  </button>
                 </div>
-                <button type="submit" class="btn btn-success w-100">
-                  Registrarse
-                </button>
               </form>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Botones -->
+      <!-- Perfil y logout -->
       <div class="text-center mt-5">
-        <button id="btnProfile" class="btn btn-info px-4 me-2">
-          Ver Perfil
-        </button>
-        <button id="btnLogout" class="btn btn-outline-danger px-4">
+        <button id="btnProfile" class="btn btn-info me-2">Ver Perfil</button>
+        <button id="btnLogout" class="btn btn-outline-danger">
           Cerrar Sesión
         </button>
       </div>
@@ -98,6 +72,61 @@
         class="mt-4 text-center fw-bold fs-5 text-primary"
       ></div>
     </div>
+
+    <!-- Modal Registro -->
+    <div
+      class="modal fade"
+      id="registerModal"
+      tabindex="-1"
+      aria-labelledby="registerModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="registerForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="registerModalLabel">Registrarse</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Cerrar"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="registerEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="registerEmail"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="registerPassword" class="form-label"
+                  >Contraseña</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="registerPassword"
+                  required
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success w-100">
+                Registrarse
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="logins.js"></script>
     <script src="register.js"></script>
     <script src="profile.js"></script>
