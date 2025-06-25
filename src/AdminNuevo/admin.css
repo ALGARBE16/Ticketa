@@ -1,0 +1,61 @@
+body {
+  background-color: #f8f9fc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+h2 {
+  color: #343a40;
+}
+
+.table thead th {
+  background-color: #f1f3f9;
+  color: #495057;
+  font-weight: 600;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.4em 0.6em;
+  border-radius: 1rem;
+}
+
+.badge.bg-danger {
+  background-color: #f06548 !important;
+}
+
+.badge.bg-success {
+  background-color: #51cf66 !important;
+}
+
+.badge.bg-warning {
+  background-color: #fab005 !important;
+  color: #212529;
+}
+
+.badge.bg-info {
+  background-color: #339af0 !important;
+}
+
+.badge.bg-secondary {
+  background-color: #ced4da !important;
+  color: #212529;
+}
+
+img.rounded-circle {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.dropdown-menu {
+  font-size: 0.875rem;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f3f5;
+}
