@@ -18,7 +18,6 @@ document
       const data = await response.json();
 
       if (response.ok && data.success) {
-        alert("Login exitoso");
         localStorage.setItem("token", data.token);
 
         // Decodificar el token para obtener el rol (sin librerías externas)
@@ -27,10 +26,15 @@ document
 
         localStorage.setItem("role", payload.role);
 
-        // Si es admin, redireccionar a panel (opcional)
         if (payload.role === "admin") {
           alert("Accediste como ADMINISTRADOR");
-          // window.location.href = "/admin/dashboard.html"; // si querés redirigir
+          window.location.href = "admin.html"; // Redirige al panel admin
+        } else if (payload.role === "user") {
+          alert("Accediste como USUARIO normal");
+          window.location.href = "html_formulario.html"; // Redirige al formulario usuario
+        } else {
+          alert("Accediste con rol desconocido: " + payload.role);
+          // Opcional: redirigir o mostrar algo
         }
       } else {
         alert("Error al iniciar sesión: " + data.message);
