@@ -18,53 +18,63 @@ async function cargarReportes() {
     tbody.innerHTML = "";
 
     data.reportes.forEach((rep) => {
+      const prioridadClass = {
+  alta: "prioridad-alta",
+  media: "prioridad-media",
+  baja: "prioridad-baja"
+};
+
+const clasePrioridad = prioridadClass[rep.priority.toLowerCase()] || "";
+
       const tr = document.createElement("tr");
 
-      let estadoClass = "";
-      if (rep.status.toLowerCase() === "pendiente")
-        estadoClass = "estado-pendiente";
-      else if (rep.status.toLowerCase() === "finalizado")
-        estadoClass = "estado-finalizado";
+const estado = rep.status.toLowerCase();
+let estadoClass = "";
 
-      tr.innerHTML = `
-        <td>${rep.id}</td>
-        <td>${rep.user_name || "Sin nombre"}</td>
-        <td>${rep.title}</td>
-        <td>${
-          rep.description.length > 80
-            ? rep.description.slice(0, 80) + "..."
-            : rep.description
-        }</td>
-        <td>${rep.area || "-"}</td>
-        <td class="${estadoClass}">${rep.status}</td>
-        <td>${rep.priority}</td>
-        <td>${
-          rep.created_at ? rep.created_at.slice(0, 16).replace("T", " ") : "-"
-        }</td>
-        <td>${
-          rep.resolved_at ? rep.resolved_at.slice(0, 16).replace("T", " ") : "-"
-        }</td>
-        <td>${
-          rep.image_path
-            ? `<img src="${rep.image_path}" alt="Imagen reporte">`
-            : "-"
-        }</td>
-        <td>
-          ${
-            rep.status.toLowerCase() === "pendiente"
-              ? `<button class="btn-finalizar btn-accion" onclick="finalizarReporte(${rep.id})">Finalizar</button>`
-              : `<button class="btn-finalizar btn-accion" disabled>Finalizado</button>`
-          }
-          <button class="btn-eliminar btn-accion" onclick="eliminarReporte(${
-            rep.id
-          })">Eliminar</button>
-          <button class="btn-detalle btn-accion" onclick="verDetalle(${
-            rep.id
-          })">Ver detalle</button>
-        </td>
-      `;
+if (estado === "pendiente") estadoClass = "estado-pendiente";
+else if (estado === "finalizado") estadoClass = "estado-finalizado";
+else if (estado === "asignado") estadoClass = "estado-asignado";
 
-      tbody.appendChild(tr);
+// Composición dinámica de los botones
+let botones = "";
+
+if (estado === "pendiente") {
+  botones += `<button class="btn-asignar btn-accion" onclick="asignarReporte(${rep.id}, '${rep.priority}')">Asignar</button>`;
+  botones += `<button class="btn-detalle btn-accion" onclick="verDetalle(${rep.id})">Ver detalle</button>`;
+}
+ else if (estado === "asignado") {
+  botones += `<button class="btn-asignar btn-accion asignado" disabled>Asignado</button>`;
+  botones += `<button class="btn-finalizar btn-accion" onclick="finalizarReporte(${rep.id}, '${rep.priority}')">Finalizar</button>`;
+  botones += `<button class="btn-eliminar btn-accion" onclick="eliminarReporte(${rep.id})">Eliminar</button>`;
+  botones += `<button class="btn-detalle btn-accion" onclick="verDetalle(${rep.id})">Ver detalle</button>`;
+} else {
+  // Por ejemplo si está finalizado
+  botones += `<button class="btn-detalle btn-accion" onclick="verDetalle(${rep.id})">Ver detalle</button>`;
+}
+
+tr.innerHTML = `
+  <td>${rep.id}</td>
+  <td>${rep.user_name || "Sin nombre"}</td>
+  <td>${rep.title}</td>
+  <td>${rep.description.length > 80 ? rep.description.slice(0, 80) + "..." : rep.description}</td>
+  <td>${rep.area || "-"}</td>
+  <td class="${estadoClass}">${rep.status}</td>
+  <td class="${clasePrioridad}">${rep.priority}</td>
+  <td>${rep.created_at ? rep.created_at.slice(0, 16).replace("T", " ") : "-"}</td>
+  <td>${rep.resolved_at ? rep.resolved_at.slice(0, 16).replace("T", " ") : "-"}</td>
+  <td>${rep.image_path ? `<img src="${rep.image_path}" alt="Imagen reporte">` : "-"}</td>
+   <td>
+    <div class="btn-container">
+      ${botones}
+    </div>
+  </td>
+`;
+
+tbody.appendChild(tr);
+
+
+
+      
     });
   } catch (error) {
     alert("Error al cargar reportes: " + error.message);
@@ -72,13 +82,14 @@ async function cargarReportes() {
   }
 }
 
-async function finalizarReporte(id) {
+async function finalizarReporte(id, prioridad) {
   if (!confirm("¿Querés marcar este reporte como FINALIZADO?")) return;
 
   try {
     const formData = new FormData();
     formData.append("id", id);
     formData.append("status", "Finalizado");
+    formData.append("priority", prioridad); // ✔️ clave: mantener la prioridad original
     const fechaNow = new Date().toISOString().slice(0, 16);
     formData.append("resolved_at", fechaNow);
 
@@ -99,6 +110,7 @@ async function finalizarReporte(id) {
     alert("Error en la conexión: " + error.message);
   }
 }
+
 
 async function eliminarReporte(id) {
   if (
@@ -155,3 +167,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = "login.html";
   }
 });
+
+// Asignar reporte
+async function asignarReporte(id, prioridad) {
+  if (!confirm("¿Querés asignar este reporte?")) return;
+
+  try {
+    const formData = new FormData();
+    formData.append("id", id);
+    formData.append("status", "Asignado");
+    formData.append("priority", prioridad); // ✔️ Esto evita que el backend la reemplace con 'MEDIA'
+
+    const response = await fetch(API_PUT_REPORTES, {
+      method: "POST",
+      body: formData,
+    });
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+      alert("Reporte asignado.");
+      cargarReportes();
+    } else {
+      alert("Error al asignar: " + (data.message || "Error desconocido"));
+    }
+  } catch (error) {
+    alert("Error en la conexión: " + error.message);
+  }
+}
+
