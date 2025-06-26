@@ -1,24 +1,20 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: *");
-header("Access-Control-Allow-Headers: *");
-header("Content-Type: application/json");
+// NO pongas headers ni salidas aquí, solo conexión
 
 try {
-    $conn = new PDO("mysql:host=localhost;dbname=soporte_tecnico", "root", "");
+    // Conexión remota
+    $conn = new PDO('mysql:host=45.235.98.42;dbname=cesara_6835', 'cesara_6835', 'H4YLRJ37aGdHFPcY');
+
+    // Establecer modo de error PDO
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // ✅ Mensaje de éxito temporal
-    echo json_encode([
-        "success" => true,
-        "message" => "✅ Conexión a la base de datos establecida correctamente"
-    ]);
+    // NO imprimir nada aquí
 } catch (PDOException $e) {
+    // Manejo de error de conexión:
     http_response_code(500);
-    echo json_encode([
+    // Mejor guardar este mensaje en log, o solo lanzar error para que los scripts lo manejen
+    die(json_encode([
         "success" => false,
-        "message" => "❌ Conexión error: " . $e->getMessage()
-    ]);
-    exit;
+        "message" => "❌ Conexión fallida: " . $e->getMessage()
+    ]));
 }
-?>
