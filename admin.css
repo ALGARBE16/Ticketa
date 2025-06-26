@@ -1,0 +1,132 @@
+body {
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-weight: 700;
+}
+
+table img {
+  max-width: 80px;
+  border-radius: 5px;
+}
+
+.estado-pendiente {
+  color: #ffc107 !important; /* amarillo */
+  font-weight: 600;
+}
+
+.estado-finalizado {
+  color: #198754 !important; /* verde bootstrap */
+  font-weight: 600;
+  
+}
+
+.estado-asignado {
+  color: #fd7e14 !important; /* naranja quemado */
+  font-weight: 600; /* o 600 si querés mantenerlo un poco más fuerte */
+}
+
+
+.btn-accion {
+  margin-right: 5px;
+}
+
+.btn-finalizar {
+  background-color: #198754;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-finalizar:hover {
+  background-color: #145c32;
+}
+
+.btn-eliminar {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-eliminar:hover {
+  background-color: #a71d2a;
+}
+
+.btn-detalle {
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-detalle:hover {
+  background-color: #084298;
+}
+/* // Boton Asignar Cesar  */
+
+.btn-asignar {
+  background-color: #ffc107; /* Naranja claro para 'pendiente' */
+  color: #212529;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-asignar:hover {
+  background-color: #e0a800; /* Naranja más fuerte al pasar el mouse */
+}
+
+.btn-asignar.asignado {
+  background-color: #fd7e14; /* naranja quemado */
+  color: white;
+  cursor: default;
+}
+
+
+/* //Prioridades de color */
+.prioridad-alta {
+  color: #dc3545 !important; /* rojo */
+  font-weight: 600;
+}
+
+.prioridad-media {
+  color: #fd7e14 !important; /* naranja */
+  font-weight: 600;
+}
+
+.prioridad-baja {
+  color: #0d6efd !important ; /* azul */
+  font-weight: 600;
+}
+
+/* botones */
+/* Contenedor de acciones alineado al centro */
+.btn-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Tamaño uniforme para todos los botones */
+.btn-accion {
+  min-width: 100px;
+  height: 36px;
+  font-size: 14px;
+  padding: 5px 12px;
+  text-align: center;
+  white-space: nowrap;
+}
+
