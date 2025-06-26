@@ -19,62 +19,63 @@ async function cargarReportes() {
 
     data.reportes.forEach((rep) => {
       const prioridadClass = {
-  alta: "prioridad-alta",
-  media: "prioridad-media",
-  baja: "prioridad-baja"
-};
+        alta: "prioridad-alta",
+        media: "prioridad-media",
+        baja: "prioridad-baja",
+      };
 
-const clasePrioridad = prioridadClass[rep.priority.toLowerCase()] || "";
+      const clasePrioridad = prioridadClass[rep.priority.toLowerCase()] || "";
 
       const tr = document.createElement("tr");
 
-const estado = rep.status.toLowerCase();
-let estadoClass = "";
+      const estado = rep.status.toLowerCase();
+      let estadoClass = "";
 
-if (estado === "pendiente") estadoClass = "estado-pendiente";
-else if (estado === "finalizado") estadoClass = "estado-finalizado";
-else if (estado === "asignado") estadoClass = "estado-asignado";
+      if (estado === "pendiente") estadoClass = "estado-pendiente";
+      else if (estado === "finalizado") estadoClass = "estado-finalizado";
+      else if (estado === "asignado") estadoClass = "estado-asignado";
 
-// Composición dinámica de los botones
-let botones = "";
+      // Composición dinámica de los botones
+      let botones = "";
 
-if (estado === "pendiente") {
-  botones += `<button class="btn-asignar btn-accion" onclick="asignarReporte(${rep.id}, '${rep.priority}')">Asignar</button>`;
-  botones += `<button class="btn-detalle btn-accion" onclick="verDetalle(${rep.id})">Ver detalle</button>`;
-}
- else if (estado === "asignado") {
-  botones += `<button class="btn-asignar btn-accion asignado" disabled>Asignado</button>`;
-  botones += `<button class="btn-finalizar btn-accion" onclick="finalizarReporte(${rep.id}, '${rep.priority}')">Finalizar</button>`;
-  botones += `<button class="btn-eliminar btn-accion" onclick="eliminarReporte(${rep.id})">Eliminar</button>`;
-  botones += `<button class="btn-detalle btn-accion" onclick="verDetalle(${rep.id})">Ver detalle</button>`;
-} else {
-  // Por ejemplo si está finalizado
-  botones += `<button class="btn-detalle btn-accion" onclick="verDetalle(${rep.id})">Ver detalle</button>`;
-}
+      // No tenés id aquí, entonces para botones deberías usar otro campo o traer id igual en PHP pero no mostrarlo (o agregarlo oculto)
+      // Pero para que los botones funcionen, necesitás el id aunque no lo muestres en la tabla visible.
 
-tr.innerHTML = `
-  <td>${rep.id}</td>
-  <td>${rep.user_name || "Sin nombre"}</td>
-  <td>${rep.title}</td>
-  <td>${rep.description.length > 80 ? rep.description.slice(0, 80) + "..." : rep.description}</td>
-  <td>${rep.area || "-"}</td>
-  <td class="${estadoClass}">${rep.status}</td>
-  <td class="${clasePrioridad}">${rep.priority}</td>
-  <td>${rep.created_at ? rep.created_at.slice(0, 16).replace("T", " ") : "-"}</td>
-  <td>${rep.resolved_at ? rep.resolved_at.slice(0, 16).replace("T", " ") : "-"}</td>
-  <td>${rep.image_path ? `<img src="${rep.image_path}" alt="Imagen reporte">` : "-"}</td>
-   <td>
-    <div class="btn-container">
-      ${botones}
-    </div>
-  </td>
-`;
+      // Por eso, mejor traer id pero no mostrarlo en la tabla visible, para poder usarlo en botones
+      const id = rep.id; // asegurate de traerlo desde PHP aunque no lo muestres en la tabla
 
-tbody.appendChild(tr);
+      if (estado === "pendiente") {
+        botones += `<button class="btn-asignar btn-accion" onclick="asignarReporte(${id}, '${rep.priority}')">Asignar</button>`;
+        botones += `<button class="btn-detalle btn-accion" onclick="verDetalle(${id})">Ver detalle</button>`;
+      } else if (estado === "asignado") {
+        botones += `<button class="btn-asignar btn-accion asignado" disabled>Asignado</button>`;
+        botones += `<button class="btn-finalizar btn-accion" onclick="finalizarReporte(${id}, '${rep.priority}')">Finalizar</button>`;
+        botones += `<button class="btn-eliminar btn-accion" onclick="eliminarReporte(${id})">Eliminar</button>`;
+        botones += `<button class="btn-detalle btn-accion" onclick="verDetalle(${id})">Ver detalle</button>`;
+      } else {
+        botones += `<button class="btn-detalle btn-accion" onclick="verDetalle(${id})">Ver detalle</button>`;
+      }
 
+      tr.innerHTML = `
+        <td>${rep.user_name || "Sin nombre"}</td>
+        <td>${rep.title}</td>
+        <td>${rep.area || "-"}</td>
+        <td class="${estadoClass}">${rep.status}</td>
+        <td class="${clasePrioridad}">${rep.priority}</td>
+        <td>${
+          rep.created_at ? rep.created_at.slice(0, 16).replace("T", " ") : "-"
+        }</td>
+        <td>${
+          rep.resolved_at ? rep.resolved_at.slice(0, 16).replace("T", " ") : "-"
+        }</td>
+        <td>
+          <div class="btn-container">
+            ${botones}
+          </div>
+        </td>
+      `;
 
-
-      
+      tbody.appendChild(tr);
     });
   } catch (error) {
     alert("Error al cargar reportes: " + error.message);
@@ -111,7 +112,6 @@ async function finalizarReporte(id, prioridad) {
   }
 }
 
-
 async function eliminarReporte(id) {
   if (
     !confirm("¿Querés eliminar este reporte? Esta acción no se puede deshacer.")
@@ -135,8 +135,66 @@ async function eliminarReporte(id) {
   }
 }
 
-function verDetalle(id) {
-  window.location.href = "html_formulario.html?id=" + id;
+async function verDetalle(id) {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("⛔ No has iniciado sesión.");
+    return (window.location.href = "login.html");
+  }
+
+  try {
+    const response = await fetch(
+      `http://localhost/Ticketa/problems_get.php?id=${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    const data = await response.json();
+
+    if (!response.ok || !data.success || !data.reporte) {
+      return Swal.fire(
+        "Error",
+        data.message || "No se pudo obtener el detalle del reporte.",
+        "error"
+      );
+    }
+
+    const rep = data.reporte;
+
+    Swal.fire({
+      title: `Reporte #${rep.id}`,
+      html: `
+        <p><strong>Título:</strong> ${rep.title}</p>
+        <p><strong>Estado:</strong> ${rep.status}</p>
+        <p><strong>Creado:</strong> ${
+          rep.created_at ? rep.created_at.replace("T", " ").slice(0, 16) : "-"
+        }</p>
+        <p><strong>Resuelto:</strong> ${
+          rep.resolved_at ? rep.resolved_at.replace("T", " ").slice(0, 16) : "-"
+        }</p>
+        <p><strong>Prioridad:</strong> ${rep.priority}</p>
+        <p><strong>Área:</strong> ${rep.area || "-"}</p>
+        <p><strong>Usuario:</strong> ${rep.user_name || "Sin nombre"}</p>
+        ${
+          rep.image_path
+            ? `<img src="${rep.image_path}" alt="Imagen reporte" style="max-width: 100%; margin-top: 10px; border-radius: 8px;">`
+            : ""
+        }
+      `,
+      icon: "info",
+      confirmButtonText: "Cerrar",
+      width: "40rem",
+    });
+  } catch (error) {
+    Swal.fire(
+      "Error",
+      "Error al obtener el detalle: " + error.message,
+      "error"
+    );
+  }
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -194,4 +252,3 @@ async function asignarReporte(id, prioridad) {
     alert("Error en la conexión: " + error.message);
   }
 }
-
