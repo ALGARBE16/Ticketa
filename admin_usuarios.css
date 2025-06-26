@@ -1,0 +1,167 @@
+/* ======= GENERAL ======= */
+body {
+  background-color: #f8f9fa !important;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* ======= TABLA ======= */
+.tabla-contenedor {
+  padding: 0 20px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white !important;
+}
+
+table th,
+table td {
+  border: 1px solid #dee2e6 !important;
+  padding: 10px;
+  text-align: center;
+}
+
+table img {
+  max-width: 80px;
+  border-radius: 5px;
+}
+
+/* ======= ESTADOS ======= */
+.estado-pendiente {
+  color: #ffc107 !important;
+  font-weight: 600;
+}
+
+.estado-asignado {
+  color: #fd7e14 !important;
+  font-weight: 600;
+}
+
+.estado-finalizado {
+  color: #198754 !important;
+  font-weight: 600;
+}
+
+/* ======= PRIORIDADES ======= */
+.prioridad-alta {
+  color: #dc3545 !important;
+  font-weight: 600;
+}
+
+.prioridad-media {
+  color: #fd7e14 !important;
+  font-weight: 600;
+}
+
+.prioridad-baja {
+  color: #0d6efd !important;
+  font-weight: 600;
+}
+
+/* ======= ROLES ======= */
+.rol-admin {
+  color: #0d6efd !important;
+  font-weight: 600;
+}
+
+.rol-user {
+  color: #198754 !important;
+  font-weight: 600;
+}
+
+/* ======= BOTONES ======= */
+.btn-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.btn-accion {
+  min-width: 100px;
+  height: 36px;
+  font-size: 14px;
+  padding: 5px 12px;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: #6c757d !important;
+  color: white !important;
+}
+
+.btn-accion:hover {
+  background-color: #495057 !important;
+}
+
+/* Acción específica */
+.btn-asignar {
+  background-color: #ffc107 !important;
+  color: #212529 !important;
+}
+
+.btn-asignar:hover {
+  background-color: #e0a800 !important;
+}
+
+.btn-asignar.asignado {
+  background-color: #fd7e14 !important;
+  color: white !important;
+  cursor: default;
+}
+
+.btn-finalizar {
+  background-color: #198754 !important;
+  color: white !important;
+}
+
+.btn-finalizar:hover {
+  background-color: #145c32 !important;
+}
+
+.btn-eliminar {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+.btn-eliminar:hover {
+  background-color: #a71d2a !important;
+}
+
+.btn-detalle {
+  background-color: #0d6efd !important;
+  color: white !important;
+}
+
+.btn-detalle:hover {
+  background-color: #084298 !important;
+}
+
+/* Botones de cambio de rol */
+.btn-rol-admin {
+  background-color: #0d6efd !important;
+  color: white !important;
+}
+
+.btn-rol-admin:hover {
+  background-color: #084298 !important;
+}
+
+.btn-rol-user {
+  background-color: #6c757d !important;
+  color: white !important;
+}
+
+.btn-rol-user:hover {
+  background-color: #495057 !important;
+}
